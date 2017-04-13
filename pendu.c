@@ -106,13 +106,11 @@ int nbocc(char * proposition, char c) {
   }
   return occ;
 }
-void addTableau(char * proposition, char c) {
-  int i = 0, occ = 0;
-  while (*(proposition+i) != '\0') {
-    if (*(proposition+i) == ' ')
-      *(proposition+i) = c;
-    i++;
-  }
+void addTableau(char * proposition, char c, int essai) {
+  if(*(proposition+essai) == ' ')
+    *(proposition+essai) = c;
+  else
+    *(proposition+essai+1) = c;
 }
 int placement(char * mot, char * proposition, char c) {
   int i = 0, occ = 0;
@@ -136,9 +134,7 @@ void proposerLettre(char * mot, char * proposition, int nbessai, char * nomJoueu
     if(nomJoueur != "IA") { // Humain
       scanf("%1c", &c);
       clear_kb();
-      if(nbocc(dejaPropose, c) == 0)
-        addTableau(dejaPropose, c);
-      else {
+      if(nbocc(dejaPropose, c) != 0) {
         while(nbocc(dejaPropose, c) > 0) {
           printf("Erreur ! Tu as déjà proposé la lettre %c, tentes en une autre :", c);
           scanf("%1c", &c);
@@ -149,8 +145,9 @@ void proposerLettre(char * mot, char * proposition, int nbessai, char * nomJoueu
       c = (char) (rand() % 26) + 97;
       while (nbocc(dejaPropose, c) > 0)
         c = (char) (rand() % 26) + 97;
-      addTableau(dejaPropose, c);
     }
+    addTableau(dejaPropose, c, essai-1);
+    printf("Lettres déjà proposées : %s\n", dejaPropose);
     if(placement(mot, proposition, c) == 0) {
       printf("Eh non, la lettre %c n'y est pas !\n", c);
       essai++;
