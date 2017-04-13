@@ -177,6 +177,7 @@ void proposerLettre(char * mot, char * proposition, int nbessai, char * nomJoueu
     printf("%s\n", proposition);
     if(nbocc(proposition, '-') >= 1 && essai == nbessai + 1) {
       printf("\nPerdu,le mot était %s\n", mot);
+      puts(" ________\n|\t |\n|\t O\n|\t-|-\n|\t/ \\");
     } else if (nbocc(proposition, '-') == 0)
       printf("\t*******Bravo ! %s a trouvé le mot en %d essai(s)*******\n", nomJoueur, essai);
   }
