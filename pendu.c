@@ -9,44 +9,37 @@ int main(void) {
   char * mot = (char *) malloc(sizeof(char)*50);
   char * proposition;
   int mode;
-  char retry;
   puts("\t\t*******PENDU*******\n\t(les mots sont entièrement en minuscule)");
   saisieNomJoueur(nameJ1, "J1");
   printf("Ok %s, veuillez choisir un mode :\n", nameJ1);
-  do {
-    choixMode(&mode);
-     switch(mode) {
-      case 1 : // J1 VS J2
-        saisieNomJoueur(nameJ2, "J2");
-        puts("L'un des 2 joueurs va être tiré au sort");
-        if( (rand() % 2)+1 == 2) {
-          initPartie(mot, &proposition, nameJ2);
-          proposerLettre(mot, proposition, strlen(mot), nameJ1);
-        }
-        else {
-          initPartie(mot, &proposition, nameJ1);
-          proposerLettre(mot, proposition, strlen(mot), nameJ2);
-        }
-        break;
-      case 2 : // J1 VS IA
-        initPartie(mot, &proposition, nameJ1);
-        proposerLettre(mot, proposition, strlen(mot), "IA");
-        break;
-      case 3 : // IA VS J1
-        mot = motIA();
-        affiche30ln();
-        proposition = (char*) malloc(sizeof(char)*strlen(mot));
-        memset(proposition, '-', strlen(mot));
+  choixMode(&mode);
+  switch(mode) {
+    case 1 : // J1 VS J2
+      saisieNomJoueur(nameJ2, "J2");
+      puts("L'un des 2 joueurs va être tiré au sort");
+      if( (rand() % 2)+1 == 2) {
+        initPartie(mot, &proposition, nameJ2);
         proposerLettre(mot, proposition, strlen(mot), nameJ1);
-        break;
-      default :
-        break;
-    }
-    puts("Voulez vous recommencer ? [y/n]");
-    scanf("%1c", &retry);
-    clear_kb();
-    affiche30ln();
-  } while (retry == 'y' || retry == 'Y' );
+      }
+      else {
+        initPartie(mot, &proposition, nameJ1);
+        proposerLettre(mot, proposition, strlen(mot), nameJ2);
+      }
+      break;
+    case 2 : // J1 VS IA
+      initPartie(mot, &proposition, nameJ1);
+      proposerLettre(mot, proposition, strlen(mot), "IA");
+      break;
+    case 3 : // IA VS J1
+      mot = motIA();
+      affiche30ln();
+      proposition = (char*) malloc(sizeof(char)*strlen(mot));
+      memset(proposition, '-', strlen(mot));
+      proposerLettre(mot, proposition, strlen(mot), nameJ1);
+      break;
+    default :
+      break;
+  }
   puts("Au revoir");
   return 0;
 }
@@ -164,7 +157,8 @@ void proposerLettre(char * mot, char * proposition, int nbessai, char * nomJoueu
         c = (char) (rand() % 26) + 97;
     }
     addTableau(dejaPropose, c, essai-1);
-    printf("Lettres déjà proposées : %s\n", dejaPropose);
+    // if(nomJoueur != "IA")
+    //   printf("Lettres déjà proposées : %s\n", dejaPropose);
     if(placement(mot, proposition, c) == 0) {
       printf("Eh non, la lettre %c n'y est pas !\n", c);
       essai++;
