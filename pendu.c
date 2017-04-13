@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "functions.h"
 
 int main(void) {
+  srand(time (NULL));
   char nameJ1 [11];
   char nameJ2 [11];
   char * mot = (char *) malloc(sizeof(char)*50);
