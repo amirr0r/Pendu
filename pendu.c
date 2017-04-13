@@ -73,11 +73,19 @@ void choixMode(int * mode) {
   clear_kb();
 }
 void saisieMot(char * mot) {
+  int i = 0;
   char *positionEntree = NULL;
   if (fgets(mot, 50, stdin) != NULL){
       positionEntree = strchr(mot, '\n');
       if (positionEntree != NULL)
           *positionEntree = '\0';
+    while(*(mot+i) != '\0') {
+      if (!(*(mot+i) >= 'a' && *(mot+i) <= 'z')) {
+        puts("Votre mot n'est pas valide\nNe tapez que des minuscules non accentués svp : ");
+        saisieMot(mot);
+      }
+      i++;
+    }
   }
   mot = (char *) realloc(mot, sizeof(char)*strlen(mot)+1);
 }
