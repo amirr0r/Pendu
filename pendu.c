@@ -140,14 +140,14 @@ void proposerLettre(char * mot, char * proposition, int nbessai, char * nomJoueu
     printf("\nEssai n°%d, lettre :", essai);
     if(nomJoueur != "IA") { // Humain
       scanf("%1c", &c);
-      maj(&c);
       clear_kb();
+      maj(&c);
       if(nbocc(dejaPropose, c) != 0) {
         while(nbocc(dejaPropose, c) > 0) {
           printf("Erreur ! Tu as déjà proposé la lettre %c, tentes en une autre :", c);
           scanf("%1c", &c);
-          maj(&c);
           clear_kb();
+          maj(&c);
         }
       }
     } else { // IA
