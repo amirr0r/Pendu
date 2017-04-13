@@ -123,6 +123,13 @@ int placement(char * mot, char * proposition, char c) {
   }
   return occ;
 }
+void maj(char * c) {
+  while(!(*c >= 'a' && *c <= 'z')) {
+    puts("Erreur, entrez une minuscule svp (non accentués) : ");
+    scanf("%1c", c);
+    clear_kb();
+  }
+}
 void proposerLettre(char * mot, char * proposition, int nbessai, char * nomJoueur) { 
   int essai = 1;
   char dejaPropose[strlen(mot)];
@@ -133,11 +140,13 @@ void proposerLettre(char * mot, char * proposition, int nbessai, char * nomJoueu
     printf("\nEssai n°%d, lettre :", essai);
     if(nomJoueur != "IA") { // Humain
       scanf("%1c", &c);
+      maj(&c);
       clear_kb();
       if(nbocc(dejaPropose, c) != 0) {
         while(nbocc(dejaPropose, c) > 0) {
           printf("Erreur ! Tu as déjà proposé la lettre %c, tentes en une autre :", c);
           scanf("%1c", &c);
+          maj(&c);
           clear_kb();
         }
       }
